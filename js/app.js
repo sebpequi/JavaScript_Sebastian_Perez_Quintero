@@ -8,7 +8,9 @@ var calculadora = {
   pantalla: document.getElementById("display"),
   decimal: 0,
   negativo: 0,
-  memoriaResultado: "",
+  memoriaResultado: 0,
+  ultNumero: 0,
+  opcion: 0,
 
   //Iniciar el reconocimiento de los Eventos onclick
   on: function(){
@@ -61,20 +63,37 @@ var calculadora = {
       this.negativo = 0;
     }
   },
-  operaciones: function(opcion){
-    switch(opcion){
+  suma: function(){
+    this.animarTeclas("mas");
+    console.log("suma");
+    this.memoriaResultado += Number(this.pantalla.innerHTML);
+    this.pantalla.innerHTML = "";
+    this.decimal = 0;
+    console.log("en la memoria hay: " + this.memoriaResultado);
+    this.opcion = 1;
+  },
+  resultado: function(){
+    this.animarTeclas("igual");
+    switch(this.opcion){
+    //Suma
       case 1:
-        console.log("suma");
+        this.ultNumero = this.pantalla.innerHTML;
+        console.log(this.ultNumero + " este dato es tipo: " + typeof this.ultNumero);
+        this.pantalla.innerHTML = "";
+        this.pantalla.innerHTML = Number(this.memoriaResultado) + Number(this.ultNumero);
+        this.memoriaResultado = 0;
+        console.log("en la memoria hay: " + this.memoriaResultado)
+        this.limiteDisplay();
       break;
 
     }
-  },
-  suma: function(){
-    this.animarTeclas("mas");
-    this.operaciones(1);
+
+
   },
   limiteDisplay: function(){
-
+    if(this.pantalla.innerHTML.length > 8){
+      this.pantalla.innerHTML = this.pantalla.innerHTML.substring(0, 8);
+    }
   },
   //Asignación de los eventos en las teclas para ver que se oprime
   eventosOnClick: function(){
@@ -92,12 +111,11 @@ var calculadora = {
     document.getElementById("on").addEventListener("click", function(){calculadora.on();});
     document.getElementById("sign").addEventListener("click", function(){calculadora.sign();});
     document.getElementById("mas").addEventListener("click", function(){calculadora.suma();});
+    document.getElementById("menos").addEventListener("click", function(){calculadora.resta();});
+    document.getElementById("por").addEventListener("click", function(){calculadora.multiplicacion();});
+    document.getElementById("dividido").addEventListener("click", function(){calculadora.division();});
+    document.getElementById("igual").addEventListener("click", function(){calculadora.resultado();});
   },
 
-
-  //Imprimir los datos en pantalla
-  escribirPantalla: function(){
-
-  },
 }
 calculadora.iniciar();
