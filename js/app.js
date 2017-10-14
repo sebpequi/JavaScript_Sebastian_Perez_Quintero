@@ -11,6 +11,7 @@ var calculadora = {
   memoriaResultado: 0,
   ultNumero: 0,
   opcion: 0,
+  igualContinuo: 0,
 
   //Iniciar el reconocimiento de los Eventos onclick
   on: function(){
@@ -71,21 +72,33 @@ var calculadora = {
     this.decimal = 0;
     console.log("en la memoria hay: " + this.memoriaResultado);
     this.opcion = 1;
+    this.igualContinuo = 0;
   },
   resultado: function(){
     this.animarTeclas("igual");
     switch(this.opcion){
     //Suma
       case 1:
-        this.ultNumero = this.pantalla.innerHTML;
-        console.log(this.ultNumero + " este dato es tipo: " + typeof this.ultNumero);
-        this.pantalla.innerHTML = "";
-        this.pantalla.innerHTML = Number(this.memoriaResultado) + Number(this.ultNumero);
-        this.memoriaResultado = 0;
-        console.log("en la memoria hay: " + this.memoriaResultado)
-        this.limiteDisplay();
+        if(this.igualContinuo == 0){
+          this.ultNumero = this.pantalla.innerHTML;
+          console.log(this.ultNumero + " este dato es tipo: " + typeof this.ultNumero);
+          this.pantalla.innerHTML = "";
+          this.pantalla.innerHTML = Number(this.memoriaResultado) + Number(this.ultNumero);
+          this.memoriaResultado = 0;
+          console.log("en la memoria hay: " + this.memoriaResultado);
+          this.igualContinuo = 1;
+        }else{
+          this.memoriaResultado = this.pantalla.innerHTML;
+          console.log("En memoria hay: " + this.memoriaResultado);
+          console.log("En ultNumero hay: " + this.ultNumero);
+          this.pantalla.innerHTML = Number(this.memoriaResultado) + Number(this.ultNumero);
+          this.memoriaResultado = 0;
+        }
+
+
       break;
 
+      this.limiteDisplay();
     }
 
 
