@@ -19,6 +19,7 @@ var calculadora = {
     this.pantalla.innerHTML = "0";
     this.decimal = 0;
     this.negativo = 0;
+    this.memoriaResultado = 0;
   },
   iniciar: (function(){
     this.eventosOnClick();
@@ -66,13 +67,87 @@ var calculadora = {
   },
   suma: function(){
     this.animarTeclas("mas");
-    console.log("suma");
-    this.memoriaResultado += Number(this.pantalla.innerHTML);
+    if(this.opcion == 0){
+      this.memoriaResultado += Number(this.pantalla.innerHTML);
+    }else {
+      this.memoriaResultado = this.resulAux();
+    };
     this.pantalla.innerHTML = "";
     this.decimal = 0;
     console.log("en la memoria hay: " + this.memoriaResultado);
     this.opcion = 1;
     this.igualContinuo = 0;
+  },
+  resta: function(){
+    this.animarTeclas("menos");
+    if(this.opcion == 0){
+      this.memoriaResultado = this.pantalla.innerHTML;
+    }else{
+      this.memoriaResultado = this.resulAux();
+    };
+    this.pantalla.innerHTML = "";
+    this.decimal = 0;
+    console.log("en la memoria hay: " + this.memoriaResultado);
+    this.opcion = 2;
+    this.igualContinuo = 0;
+  },
+  multiplicacion: function(){
+    this.animarTeclas("por");
+    if(this.opcion == 0){
+      this.memoriaResultado = this.pantalla.innerHTML;
+    }else{
+      this.memoriaResultado = this.resulAux();
+    };
+    this.pantalla.innerHTML = "";
+    this.decimal = 0;
+    console.log("en la memoria hay: " + this.memoriaResultado);
+    this.opcion = 3;
+    this.igualContinuo = 0;
+  },
+  division: function(){
+    this.animarTeclas("dividido");
+    if(this.opcion == 0){
+      this.memoriaResultado = this.pantalla.innerHTML;
+    }else{
+      this.memoriaResultado = this.resulAux();
+    };
+    this.pantalla.innerHTML = "";
+    this.decimal = 0;
+    console.log("en la memoria hay: " + this.memoriaResultado);
+    this.opcion = 4;
+    this.igualContinuo = 0;
+  },
+  resulAux: function(){
+    switch(this.opcion){
+      case 1:
+        this.ultNumero = this.pantalla.innerHTML;
+        console.log("el ultimo numero es: " + this.ultNumero + "y la memoria es: " + this.memoriaResultado);
+        this.memoriaResultado = Number(this.ultNumero) + Number(this.memoriaResultado);
+        console.log("Acá la memoria es: " + this.memoriaResultado);
+        return this.memoriaResultado;
+      break;
+      case 2:
+        this.ultNumero = this.pantalla.innerHTML;
+        console.log("el ultimo numero es: " + this.ultNumero + "y la memoria es: " + this.memoriaResultado);
+        this.memoriaResultado = Number(this.memoriaResultado) - Number(this.ultNumero);
+        console.log("Acá la memoria es: " + this.memoriaResultado);
+        return this.memoriaResultado;
+      break;
+      case 3:
+        this.ultNumero = this.pantalla.innerHTML;
+        console.log("el ultimo numero es: " + this.ultNumero + "y la memoria es: " + this.memoriaResultado);
+        this.memoriaResultado = Number(this.ultNumero) * Number(this.memoriaResultado);
+        console.log("Acá la memoria es: " + this.memoriaResultado);
+        return this.memoriaResultado;
+      break;
+      case 4:
+        this.ultNumero = this.pantalla.innerHTML;
+        console.log("el ultimo numero es: " + this.ultNumero + "y la memoria es: " + this.memoriaResultado);
+        this.memoriaResultado = Number(this.memoriaResultado) / Number(this.ultNumero);
+        console.log("Acá la memoria es: " + this.memoriaResultado);
+        return this.memoriaResultado;
+      break;
+    }
   },
   resultado: function(){
     this.animarTeclas("igual");
@@ -87,21 +162,72 @@ var calculadora = {
           this.memoriaResultado = 0;
           console.log("en la memoria hay: " + this.memoriaResultado);
           this.igualContinuo = 1;
-        }else{
+        } else {
           this.memoriaResultado = this.pantalla.innerHTML;
           console.log("En memoria hay: " + this.memoriaResultado);
           console.log("En ultNumero hay: " + this.ultNumero);
           this.pantalla.innerHTML = Number(this.memoriaResultado) + Number(this.ultNumero);
           this.memoriaResultado = 0;
         }
-
-
+        break;
+    //Resta
+      case 2:
+        if(this.igualContinuo == 0){
+          this.ultNumero = this.pantalla.innerHTML;
+          console.log(this.ultNumero + " este dato es tipo: " + typeof this.ultNumero);
+          this.pantalla.innerHTML = "";
+          this.pantalla.innerHTML = Number(this.memoriaResultado) - Number(this.ultNumero);
+          this.memoriaResultado = 0;
+          console.log("en la memoria hay: " + this.memoriaResultado);
+          this.igualContinuo = 1;
+        }else{
+          this.memoriaResultado = this.pantalla.innerHTML;
+          console.log("En memoria hay: " + this.memoriaResultado);
+          console.log("En ultNumero hay: " + this.ultNumero);
+          this.pantalla.innerHTML = Number(this.memoriaResultado) - Number(this.ultNumero);
+          this.memoriaResultado = 0;
+        }
       break;
-
-      this.limiteDisplay();
+    //Multiplicacion
+      case 3:
+        if(this.igualContinuo == 0){
+          this.ultNumero = this.pantalla.innerHTML;
+          console.log(this.ultNumero + " este dato es tipo: " + typeof this.ultNumero);
+          this.pantalla.innerHTML = "";
+          this.pantalla.innerHTML = Number(this.memoriaResultado) * Number(this.ultNumero);
+          this.memoriaResultado = 0;
+          console.log("en la memoria hay: " + this.memoriaResultado);
+          this.igualContinuo = 1;
+        }else{
+          this.memoriaResultado = this.pantalla.innerHTML;
+          console.log("En memoria hay: " + this.memoriaResultado);
+          console.log("En ultNumero hay: " + this.ultNumero);
+          this.pantalla.innerHTML = Number(this.memoriaResultado) * Number(this.ultNumero);
+          this.memoriaResultado = 0;
+        }
+      break;
+    //Division
+      case 4:
+        if(this.igualContinuo == 0){
+          this.ultNumero = this.pantalla.innerHTML;
+          console.log(this.ultNumero + " este dato es tipo: " + typeof this.ultNumero);
+          this.pantalla.innerHTML = "";
+          this.pantalla.innerHTML = Number(this.memoriaResultado) / Number(this.ultNumero);
+          this.memoriaResultado = 0;
+          console.log("en la memoria hay: " + this.memoriaResultado);
+          this.igualContinuo = 1;
+        }else{
+          this.memoriaResultado = this.pantalla.innerHTML;
+          console.log("En memoria hay: " + this.memoriaResultado);
+          console.log("En ultNumero hay: " + this.ultNumero);
+          this.pantalla.innerHTML = Number(this.memoriaResultado) / Number(this.ultNumero);
+          this.memoriaResultado = 0;
+        }
+      break;
+      default:
+      break;
     }
-
-
+    this.limiteDisplay();
   },
   limiteDisplay: function(){
     if(this.pantalla.innerHTML.length > 8){
