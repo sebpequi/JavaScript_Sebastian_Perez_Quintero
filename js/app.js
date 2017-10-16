@@ -282,7 +282,6 @@ var calculadora = {
   },
   lectorTeclas: function(et){
     var tecla = et.key;
-    console.log(tecla);
     switch(tecla){
       case "0":
         calculadora.agregarDatos("0");
